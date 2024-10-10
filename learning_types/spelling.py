@@ -3,6 +3,8 @@ import time
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 
+
+# noinspection PyBroadException
 def run_spelling(driver, num_d, da_e, da_k):
     print("스펠학습을 시작합니다...")
     driver.find_element(By.XPATH, "/html/body/div[2]/div/div[2]/div[1]/div[3]").click()

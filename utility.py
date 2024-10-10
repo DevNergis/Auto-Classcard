@@ -1,11 +1,14 @@
 # utility.py
-import time
-import json
-import re
 import os
-from selenium.webdriver.common.by import By
+import re
+import time
+
+import httpx
 from selenium.common.exceptions import NoSuchElementException
-import requests
+from selenium.webdriver.common.by import By
+
+import env
+
 
 def word_get(driver, num_d) -> list:
     da_e, da_k, da_kn, da_kyn, da_ked, da_sd = [[""] * num_d for _ in range(6)]
@@ -38,8 +41,8 @@ def word_get(driver, num_d) -> list:
         ko_d = ko_d.split("\n")
         
         #명. 동. 형. 부. 와 같은 품사 표기 제거(options)
-        POS_MARKERS = ['명', '동', '형', '부'] 
-        pattern = r'\b(?:' + '|'.join(POS_MARKERS) + r')\.\s*'
+        pos_markers = ['명', '동', '형', '부']
+        pattern = r'\b(?:' + '|'.join(pos_markers) + r')\.\s*'
         edit_ko_d = [re.sub(pattern, '', line) for line in ko_d]
 
         if len(ko_d) == 1:
@@ -87,11 +90,13 @@ Developed by NellLucas(서재형)
             quit()
     return ch_d
 
+
+# noinspection PyShadowingBuiltins
 def check_id(id, pw) -> bool:
     print("계정 정보를 확인하고 있습니다... 잠시만 기다리세요!!")
     headers = {"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"}
     data = {"login_id": id, "login_pwd": pw}
-    res = requests.post(
+    res = httpx.post(
         "https://www.classcard.net/LoginProc", headers=headers, data=data
     )
     try:
@@ -111,7 +116,7 @@ def choice_set(sets: dict) -> int:
     while True:
         try:
             ch_s = int(input(">>> "))
-            if ch_s >= 1 and ch_s <= len(sets):
+            if 1 <= ch_s <= len(sets):
                 break
             else:
                 raise ValueError
@@ -132,7 +137,7 @@ def choice_class(class_dict: dict) -> int:
     while True:
         try:
             ch_c = int(input(">>> "))
-            if ch_c >= 1 and ch_c <= len(class_dict):
+            if 1 <= ch_c <= len(class_dict):
                 break
             else:
                 raise ValueError
@@ -144,32 +149,32 @@ def choice_class(class_dict: dict) -> int:
     print(f"{class_dict[ch_c-1].get('class_name')}를 선택하셨습니다.")
     return ch_c - 1
 
+
+# noinspection PyShadowingBuiltins
 def save_id() -> dict:
     while True:
         id = input("아이디를 입력하세요 : ")
         password = input("비밀번호를 입력하세요 : ")
         if check_id(id, password):
-            data = {"id": id, "pw": password}
-            with open("config.json", "w", encoding="utf-8") as f:
-                json.dump(data, f, ensure_ascii=False, indent=4)
-            print("아이디 비밀번호가 저장되었습니다.\n")
+            data = {"ID": id, "PW": password}
+            env.save_account(id, password)
             return data
         else:
             print("아이디 또는 비밀번호가 잘못되었습니다.\n")
             continue
 
 def get_id():
-    try:
-        with open("config.json", "r", encoding="utf-8") as f:
-            json_data = json.load(f)
-            return json_data
-    except (FileNotFoundError, json.JSONDecodeError):
+    if env.account is None:
         return save_id()
+    else:
+        return env.account
 
+
+# noinspection PyTypeChecker
 def classcard_api_post(
     user_id: int,
-    set_id: int,
-    class_id: int,
+    set_id: str,
+    class_id: str,
     view_cnt: int,
     activity: int,
 ) -> None:
@@ -178,5 +183,5 @@ def classcard_api_post(
     headers = {
         "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
     }
-    requests.request("POST", url, data=payload, headers=headers)
+    httpx.post(url, data=payload, headers=headers)
     print("API 요청 변조에 성공하였습니다!")

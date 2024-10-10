@@ -4,8 +4,10 @@ import random
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions as ec
 
+
+# noinspection 
 def run_quiz_battle(driver, da_e, da_k, da_sd):
     print("퀴즈배틀을 시작합니다...")
     driver.get('https://b.classcard.net/Home/battle_enter?u_n=')
@@ -29,10 +31,11 @@ def run_quiz_battle(driver, da_e, da_k, da_sd):
         print("Error entering Quiz Battle mode.")
         pass
 
-    element = WebDriverWait(driver, 100000).until(
-        EC.presence_of_element_located((By.XPATH, "/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[1]/div/div/div/div/div[1]"))
+    WebDriverWait(driver, 100000).until(
+        ec.presence_of_element_located((By.XPATH,
+                                        "/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[1]/div/div/div/div/div[1]"))
     )
-    beforeCash_d = None
+    before_cash_d = None
 
     while True:
         try:
@@ -49,7 +52,7 @@ def run_quiz_battle(driver, da_e, da_k, da_sd):
                                                      ).text
                         if not cash_d:
                             raise NoSuchElementException
-                        if cash_d == beforeCash_d:
+                        if cash_d == before_cash_d:
                             raise ValueError
 
                         cash_dby = [0, 0, 0, 0]
@@ -59,7 +62,7 @@ def run_quiz_battle(driver, da_e, da_k, da_sd):
                                                               f"/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[2]/div/div/div[2]/div[{j + 1}]/div/div"
                                                               ).text
                         time.sleep(0.1)
-                        notFindData = False
+                        not_find_data = False
 
                         if cash_d.upper() != cash_d.lower():
                             for j in range(0, 4):
@@ -68,7 +71,7 @@ def run_quiz_battle(driver, da_e, da_k, da_sd):
                                                                   f"/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[2]/div/div/div[2]/div[{j + 1}]/div/div"
                                                                   )
                                     driver.execute_script("arguments[0].click();", element)
-                                    notFindData = True
+                                    not_find_data = True
                                     break
                         else:
                             for j in range(0, 4):
@@ -77,16 +80,16 @@ def run_quiz_battle(driver, da_e, da_k, da_sd):
                                                                   f"/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[2]/div/div/div[2]/div[{j + 1}]/div/div"
                                                                   )
                                     driver.execute_script("arguments[0].click();", element)
-                                    notFindData = True
+                                    not_find_data = True
                                     break
 
-                        if notFindData != True:
+                        if not not_find_data:
                             print("\nDetected Missing Words!!, Randomly Selected\n")
                             driver.find_element(By.XPATH,
                                                 f"/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[2]/div/div/div[2]/div[{random.randint(1, 4)}]/div/div"
                                                 ).click()
                             time.sleep(0.2)
-                        beforeCash_d = cash_d
+                        before_cash_d = cash_d
                         time.sleep(0.3)
                     except NoSuchElementException:
                         time.sleep(0.5)
@@ -99,7 +102,7 @@ def run_quiz_battle(driver, da_e, da_k, da_sd):
                                                               f"/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[2]/div/div/div[2]/div[{j + 1}]/div/div"
                                                               ).text
                         time.sleep(0.2)
-                        notFindData = False
+                        not_find_data = False
 
                         if cash_sdy[0].upper() != cash_sdy[0].lower():
                             for j in range(0, 4):
@@ -108,7 +111,7 @@ def run_quiz_battle(driver, da_e, da_k, da_sd):
                                                                   f"/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[2]/div/div/div[2]/div[{j + 1}]/div/div"
                                                                   )
                                     driver.execute_script("arguments[0].click();", element)
-                                    notFindData = True
+                                    not_find_data = True
                                     break
                         else:
                             for j in range(0, 4):
@@ -117,10 +120,10 @@ def run_quiz_battle(driver, da_e, da_k, da_sd):
                                                                   f"/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[2]/div/div/div[2]/div[{j + 1}]/div/div"
                                                                   )
                                     driver.execute_script("arguments[0].click();", element)
-                                    notFindData = True
+                                    not_find_data = True
                                     break
 
-                        if notFindData != True:
+                        if not not_find_data:
                             print("\nDetected Missing Words!!, Randomly Selected\n")
                             driver.find_element(By.XPATH,
                                                 f"/html/body/div[1]/div[3]/div/div/div/div[4]/div[3]/div[1]/div[2]/div/div/div[2]/div/div/div[2]/div[{random.randint(1, 4)}]/div/div"

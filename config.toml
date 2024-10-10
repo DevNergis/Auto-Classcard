@@ -1,0 +1,10 @@
+[account]
+ID = "syj0318"
+PW = "@gjtQ6v5q@GxY8B"
+
+[setting]
+roop = true
+
+[setting.matching_game]
+count = 10
+interval = 2

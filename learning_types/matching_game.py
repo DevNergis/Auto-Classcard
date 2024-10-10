@@ -5,6 +5,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.common.exceptions import ElementClickInterceptedException, NoSuchElementException
 
+
+# noinspection PyUnboundLocalVariable
 def run_matching_game(driver, da_e, da_k):
     print("매칭게임을 시작합니다...")
     driver.find_element(By.XPATH, "/html/body/div[2]/div/div[2]/div[1]/div[5]").click()

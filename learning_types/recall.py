@@ -3,6 +3,8 @@ import time
 from selenium.webdriver.common.by import By
 import random
 
+
+# noinspection PyBroadException
 def run_recall(driver, num_d, da_e, da_kyn, time_2):
     print("리콜학습을 시작합니다...")
     driver.find_element(By.XPATH, "/html/body/div[2]/div/div[2]/div[1]/div[2]").click()

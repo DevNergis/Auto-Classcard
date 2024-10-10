@@ -2,12 +2,14 @@
 import time
 from selenium.webdriver.common.by import By
 
+
+# noinspection PyBroadException
 def run_memorization(driver, num_d):
     print("암기학습을 시작합니다...")
     driver.find_element(By.XPATH, "/html/body/div[2]/div/div[2]/div[1]/div[1]").click()
     time.sleep(1)
     driver.find_element(By.CSS_SELECTOR, "#wrapper-learn > div.start-opt-body > div > div > div > div.m-t > a").click()
-    
+
     for i in range(1, num_d):
         time.sleep(2.5)
         try:

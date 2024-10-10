@@ -1,12 +1,13 @@
-# main.py
 import time
 import warnings
 import random
+import typer
 
 from selenium import webdriver
 from bs4 import BeautifulSoup
 from selenium.webdriver.common.by import By
 
+import env
 from utility import chd_wh, get_id, word_get, choice_class, choice_set, classcard_api_post
 from learning_types import (
     memorization,
@@ -20,9 +21,12 @@ from learning_types import (
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
+app = typer.Typer()
+
+@app.command()
 def main():
     account = get_id()
-    
+
     time_1 = round(random.uniform(0.7, 1.3), 4)
     time_2 = round(random.uniform(1.7, 2.3), 4)
 
@@ -38,8 +42,8 @@ def main():
         tag_id = driver.find_element(By.ID, "login_id")
         tag_pw = driver.find_element(By.ID, "login_pwd")
         tag_id.clear()
-        tag_id.send_keys(account["id"])
-        tag_pw.send_keys(account["pw"])
+        tag_id.send_keys(account["ID"])
+        tag_pw.send_keys(account["PW"])
         driver.find_element(By.CSS_SELECTOR,
                             "#loginForm > div.checkbox.primary.text-primary.text-center.m-t-md > a"
                             ).click()
@@ -55,9 +59,7 @@ def main():
             class_list_element.find_elements(By.TAG_NAME, "a"),
             range(len(class_list_element.find_elements(By.TAG_NAME, "a"))),
         ):
-            class_temp = {}
-            class_temp["class_name"] = class_item.text
-            class_temp["class_id"] = class_item.get_attribute("href").split("/")[-1]
+            class_temp = {"class_name": class_item.text, "class_id": class_item.get_attribute("href").split("/")[-1]}
             if class_temp["class_id"] == "joinClass":
                 break
             class_dict[i] = class_temp
@@ -75,17 +77,16 @@ def main():
 
         time.sleep(1)  # 로딩 대기
 
-        sets_list = []
         sets_div = driver.find_element(
             By.XPATH, "/html/body/div[1]/div[2]/div/div/div[2]/div[3]/div"
         )
         sets = sets_div.find_elements(By.CLASS_NAME, "set-items")
         sets_dict = {}
         for set_item, i in zip(sets, range(len(sets))):
-            set_temp = {}
-            set_temp["card_num"] = (  # 카드 개수 가져오기(10 카드)
+            # 카드 개수 가져오기(10 카드)
+            set_temp = dict(card_num=(
                 set_item.find_element(By.TAG_NAME, "a").find_element(By.TAG_NAME, "span").text
-            )
+            ))
             set_temp["title"] = set_item.find_element(By.TAG_NAME, "a").text.replace(
                 set_temp["card_num"], ""
             )  # 카드 개수 제거
@@ -118,7 +119,7 @@ def main():
         num_d = len(cards_ele.find_all("div", class_="flip-card")) + 1  # 카드의 개수를 구함
 
         time.sleep(0.5)  # 로딩 대기
-        
+
         word_d = word_get(driver, num_d) # 단어 데이터 수집
         da_e, da_k, da_kn, da_kyn, da_ked, da_sd = word_d
 
@@ -175,4 +176,4 @@ def main():
         driver.quit() #웹드라이버 종료
 
 if __name__ == "__main__":
-    main()
+    app()
