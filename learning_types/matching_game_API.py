@@ -3,6 +3,7 @@ import httpx
 from urllib.parse import quote
 import env
 
+
 class Ggk:
     def __init__(self, key_array):
         self.k = key_array
@@ -38,10 +39,10 @@ def run_matching_game_api(driver, match_site):
     class_idx = driver.execute_script('return window.class_idx;')
     cookies = "; ".join([f"{c['name']}={c['value']}" for c in driver.get_cookies()])
 
-#-----------options-------------
+    #-----------options-------------
     count = env.setting_matching_game['count']
     interval = env.setting_matching_game['interval']
-#-----------options-------------    
+    #-----------options-------------
 
     activity = 4
     start_time = int(time.time() * 1000)
@@ -69,9 +70,9 @@ def run_matching_game_api(driver, match_site):
         "Cookie": cookies,
     }
 
-
     try:
-        response = httpx.post("https://www.classcard.net/Match/save", headers=headers, data="&".join(encoded_data_array))
+        response = httpx.post("https://www.classcard.net/Match/save", headers=headers,
+                              data="&".join(encoded_data_array))
         response.raise_for_status()
         #data = response.json()
         #print("응답 데이터:", data)

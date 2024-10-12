@@ -53,10 +53,11 @@ def run_test(driver, num_d, da_e, da_k, da_kn, da_ked, time_1):
             break
         time.sleep(0.7)
 
-    if not wait_for_element(driver, By.XPATH, "//*[@id='testForm']/div[1]/div/div[1]/div[2]/div/div/div", timeout=time_1):
+    if not wait_for_element(driver, By.XPATH, "//*[@id='testForm']/div[1]/div/div[1]/div[2]/div/div/div",
+                            timeout=time_1):
         print("화면 전환이 완료되지 않았습니다. 테스트학습을 종료합니다.")
         return
-    
+
     for i in range(1, num_d):
         time.sleep(0.2)
         try:
@@ -91,16 +92,16 @@ def run_test(driver, num_d, da_e, da_k, da_kn, da_ked, time_1):
                         try:
                             if da_e.index(cash_d) == da_kn.index(cash_dby[j]):
                                 element = driver.find_element(By.XPATH,
-                                                            f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
-                                                            )
+                                                              f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
+                                                              )
                                 driver.execute_script("arguments[0].click();", element)
                                 not_find_data = True
                                 break
                         except:
                             if da_e.index(cash_d) == da_ked.index(cash_dby[j]):
                                 element = driver.find_element(By.XPATH,
-                                                            f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
-                                                            )
+                                                              f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
+                                                              )
                                 driver.execute_script("arguments[0].click();", element)
                                 not_find_data = True
                                 break
@@ -119,16 +120,16 @@ def run_test(driver, num_d, da_e, da_k, da_kn, da_ked, time_1):
                         try:
                             if da_kn.index(cash_d) == da_e.index(cash_dby[j]):
                                 element = driver.find_element(By.XPATH,
-                                                            f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
-                                                            )
+                                                              f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
+                                                              )
                                 driver.execute_script("arguments[0].click();", element)
                                 not_find_data = True
                                 break
                         except:
                             if da_ked.index(cash_d) == da_e.index(cash_dby[j]):
                                 element = driver.find_element(By.XPATH,
-                                                            f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
-                                                            )
+                                                              f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
+                                                              )
                                 driver.execute_script("arguments[0].click();", element)
                                 not_find_data = True
                                 break

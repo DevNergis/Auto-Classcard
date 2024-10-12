@@ -12,6 +12,7 @@ else:
 setting = config['setting']
 setting_matching_game = setting['matching_game']
 
+
 # noinspection PyTypeChecker,PyShadowingBuiltins
 def save_account(id: str, pw: str):
     config['account'] = {'ID': id, 'PW': pw}
