@@ -2,7 +2,10 @@ import time
 from bs4 import BeautifulSoup
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
-from selenium.common.exceptions import ElementClickInterceptedException, NoSuchElementException
+from selenium.common.exceptions import (
+    ElementClickInterceptedException,
+    NoSuchElementException,
+)
 
 
 def run_matching_game(driver, da_e, da_k):
@@ -24,8 +27,11 @@ def run_matching_game(driver, da_e, da_k):
 
             unsorted_cards = {
                 f"{html.find('div', id=f'left_card_{i}').get_text(strip=True)}_{i}": int(
-                    html.find('div', id=f'left_card_{i}').find("span", class_="card-score").get_text(strip=True)
-                ) for i in range(4)
+                    html.find("div", id=f"left_card_{i}")
+                    .find("span", class_="card-score")
+                    .get_text(strip=True)
+                )
+                for i in range(4)
             }
 
             sorted_lists = sorted(unsorted_cards.items(), key=lambda item: item[1])
@@ -35,14 +41,19 @@ def run_matching_game(driver, da_e, da_k):
                 answer = da_k[da_e.index(word)]
 
                 for j in range(4):
-                    if html.find("div", id=f"right_card_{j}").get_text(strip=True) == answer:
+                    if (
+                        html.find("div", id=f"right_card_{j}").get_text(strip=True)
+                        == answer
+                    ):
                         left_element = driver.find_element(By.ID, f"left_card_{order}")
                         right_element = driver.find_element(By.ID, f"right_card_{j}")
                         try:
                             left_element.click()
                             right_element.click()
                         except ElementClickInterceptedException:
-                            ActionChains(driver).click(left_element).click(right_element).perform()
+                            ActionChains(driver).click(left_element).click(
+                                right_element
+                            ).perform()
                         raise NotImplementedError
 
         except NotImplementedError:

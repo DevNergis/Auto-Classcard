@@ -13,32 +13,41 @@ def word_get(driver, num_d):
     da_e, da_k, da_kn, da_kyn, da_ked, da_sd = [[""] * num_d for _ in range(6)]
 
     for i in range(1, num_d):
-        da_e[i] = driver.find_element(By.XPATH,
-                                      f"//*[@id='tab_set_all']/div[2]/div[{i}]/div[4]/div[1]/div[1]/div/div").text
+        da_e[i] = driver.find_element(
+            By.XPATH,
+            f"//*[@id='tab_set_all']/div[2]/div[{i}]/div[4]/div[1]/div[1]/div/div",
+        ).text
 
     try:
         for i in range(1, num_d):
-            url = driver.find_element(By.XPATH,
-                                      f"//*[@id='tab_set_all']/div[2]/div[{i}]/div[4]/div[1]/div[3]/a").get_attribute(
-                'data-src')
+            url = driver.find_element(
+                By.XPATH,
+                f"//*[@id='tab_set_all']/div[2]/div[{i}]/div[4]/div[1]/div[3]/a",
+            ).get_attribute("data-src")
             lv = [part for part in url.split("/") if part]
-            upload_index = next((index for index, part in enumerate(lv) if "uploads" in part), None)
+            upload_index = next(
+                (index for index, part in enumerate(lv) if "uploads" in part), None
+            )
             if upload_index is not None:
                 lv = lv[upload_index:]
             da_sd[i] = "/" + "/".join(lv)
     except NoSuchElementException:
         pass
 
-    driver.find_element(By.CSS_SELECTOR, "#tab_set_all > div.card-list-title > div > div:nth-child(1) > a").click()
+    driver.find_element(
+        By.CSS_SELECTOR,
+        "#tab_set_all > div.card-list-title > div > div:nth-child(1) > a",
+    ).click()
     time.sleep(0.5)
 
     for i in range(1, num_d):
-        ko_d = driver.find_element(By.XPATH,
-                                   f"//*[@id='tab_set_all']/div[2]/div[{i}]/div[4]/div[2]/div[1]/div/div").text.split(
-            "\n")
-        pos_markers = ['명', '동', '형', '부']
-        pattern = r'\b(?:' + '|'.join(pos_markers) + r')\.\s*'
-        edit_ko_d = [re.sub(pattern, '', line) for line in ko_d]
+        ko_d = driver.find_element(
+            By.XPATH,
+            f"//*[@id='tab_set_all']/div[2]/div[{i}]/div[4]/div[2]/div[1]/div/div",
+        ).text.split("\n")
+        pos_markers = ["명", "동", "형", "부"]
+        pattern = r"\b(?:" + "|".join(pos_markers) + r")\.\s*"
+        edit_ko_d = [re.sub(pattern, "", line) for line in ko_d]
 
         if len(ko_d) == 1:
             da_k[i] = da_kn[i] = da_kyn[i] = ko_d[0]
@@ -53,7 +62,8 @@ def word_get(driver, num_d):
 
 
 def chd_wh() -> int:
-    print("""
+    print(
+        """
 학습 유형을 선택해주세요!!
 [1] 암기학습(API 요청 변조)
 [2] 리콜학습(API 요청 변조)
@@ -67,7 +77,8 @@ def chd_wh() -> int:
 [10] 매칭게임(매크로)
 ---------------------------
 Developed by NellLucas(서재형)
-    """)
+    """
+    )
     while True:
         try:
             ch_d = int(input(">>> "))
@@ -100,7 +111,9 @@ def choice_set(sets: dict) -> int:
     os.system("cls")
     print("학습할 세트를 선택해주세요.\nCtrl + C 를 눌러 종료")
     for set_item in sets:
-        print(f"[{set_item + 1}] {sets[set_item].get('title')} | {sets[set_item].get('card_num')}")
+        print(
+            f"[{set_item + 1}] {sets[set_item].get('title')} | {sets[set_item].get('card_num')}"
+        )
     while True:
         try:
             ch_s = int(input(">>> "))
@@ -155,7 +168,9 @@ def get_id():
 
 
 # noinspection PyTypeChecker
-def classcard_api_post(user_id: int, set_id: str, class_id: str, view_cnt: int, activity: int) -> None:
+def classcard_api_post(
+    user_id: int, set_id: str, class_id: str, view_cnt: int, activity: int
+) -> None:
     url = "https://www.classcard.net/ViewSetAsync/resetAllLog"
     payload = f"set_idx={set_id}&activity={activity}&user_idx={user_id}&view_cnt={view_cnt}&class_idx={class_id}"
     headers = {"content-type": "application/x-www-form-urlencoded; charset=UTF-8"}

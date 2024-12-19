@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 
 
-# noinspection 
+# noinspection
 def wait_and_click(driver, by, identifier, timeout=10):
     try:
         element = WebDriverWait(driver, timeout).until(
@@ -20,7 +20,7 @@ def wait_and_click(driver, by, identifier, timeout=10):
         return False
 
 
-# noinspection 
+# noinspection
 def wait_for_element(driver, by, identifier, timeout=10):
     try:
         element = WebDriverWait(driver, timeout).until(
@@ -38,8 +38,11 @@ def run_test(driver, num_d, da_e, da_k, da_kn, da_ked, time_1):
 
     initial_steps = [
         (By.XPATH, "/html/body/div[2]/div/div[2]/div[2]/div"),
-        (By.CSS_SELECTOR, "#wrapper-test > div > div.quiz-start-div > div.layer.retry-layer.box > div.m-t-xl > a"),
-        (By.XPATH, "//*[@id='wrapper-test']/div/div[1]/div[3]/div[3]/a")
+        (
+            By.CSS_SELECTOR,
+            "#wrapper-test > div > div.quiz-start-div > div.layer.retry-layer.box > div.m-t-xl > a",
+        ),
+        (By.XPATH, "//*[@id='wrapper-test']/div/div[1]/div[3]/div[3]/a"),
     ]
 
     for by, identifier in initial_steps:
@@ -49,59 +52,72 @@ def run_test(driver, num_d, da_e, da_k, da_kn, da_ked, time_1):
         time.sleep(0.7)
 
     for _ in range(2):
-        if not wait_and_click(driver, By.XPATH, "//*[@id='confirmModal']/div[2]/div/div[2]/a[3]", timeout=1):
+        if not wait_and_click(
+            driver,
+            By.XPATH,
+            "//*[@id='confirmModal']/div[2]/div/div[2]/a[3]",
+            timeout=1,
+        ):
             break
         time.sleep(0.7)
 
-    if not wait_for_element(driver, By.XPATH, "//*[@id='testForm']/div[1]/div/div[1]/div[2]/div/div/div",
-                            timeout=time_1):
+    if not wait_for_element(
+        driver,
+        By.XPATH,
+        "//*[@id='testForm']/div[1]/div/div[1]/div[2]/div/div/div",
+        timeout=time_1,
+    ):
         print("화면 전환이 완료되지 않았습니다. 테스트학습을 종료합니다.")
         return
 
     for i in range(1, num_d):
         time.sleep(0.2)
         try:
-            cash_d = driver.find_element(By.XPATH,
-                                         f"//*[@id='testForm']/div[{i}]/div/div[1]/div[2]/div/div/div"
-                                         ).text
+            cash_d = driver.find_element(
+                By.XPATH, f"//*[@id='testForm']/div[{i}]/div/div[1]/div[2]/div/div/div"
+            ).text
 
-            element = driver.find_element(By.XPATH,
-                                          f"//*[@id='testForm']/div[{i}]/div/div[1]/div[2]"
-                                          )
+            element = driver.find_element(
+                By.XPATH, f"//*[@id='testForm']/div[{i}]/div/div[1]/div[2]"
+            )
             driver.execute_script("arguments[0].click();", element)
             time.sleep(0.5)
 
             cash_dby = [0, 0, 0, 0, 0, 0]
             for j in range(0, 6):
-                cash_dby[j] = driver.find_element(By.XPATH,
-                                                  f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
-                                                  ).text
+                cash_dby[j] = driver.find_element(
+                    By.XPATH,
+                    f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div",
+                ).text
 
             not_find_data = False
             if cash_d.upper() != cash_d.lower():
                 for j in range(0, 6):
                     try:
                         if da_e.index(cash_d) == da_k.index(cash_dby[j]):
-                            element = driver.find_element(By.XPATH,
-                                                          f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
-                                                          )
+                            element = driver.find_element(
+                                By.XPATH,
+                                f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div",
+                            )
                             driver.execute_script("arguments[0].click();", element)
                             not_find_data = True
                             break
                     except:
                         try:
                             if da_e.index(cash_d) == da_kn.index(cash_dby[j]):
-                                element = driver.find_element(By.XPATH,
-                                                              f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
-                                                              )
+                                element = driver.find_element(
+                                    By.XPATH,
+                                    f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div",
+                                )
                                 driver.execute_script("arguments[0].click();", element)
                                 not_find_data = True
                                 break
                         except:
                             if da_e.index(cash_d) == da_ked.index(cash_dby[j]):
-                                element = driver.find_element(By.XPATH,
-                                                              f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
-                                                              )
+                                element = driver.find_element(
+                                    By.XPATH,
+                                    f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div",
+                                )
                                 driver.execute_script("arguments[0].click();", element)
                                 not_find_data = True
                                 break
@@ -110,35 +126,39 @@ def run_test(driver, num_d, da_e, da_k, da_kn, da_ked, time_1):
                 for j in range(0, 6):
                     try:
                         if da_k.index(cash_d) == da_e.index(cash_dby[j]):
-                            element = driver.find_element(By.XPATH,
-                                                          f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
-                                                          )
+                            element = driver.find_element(
+                                By.XPATH,
+                                f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div",
+                            )
                             driver.execute_script("arguments[0].click();", element)
                             not_find_data = True
                             break
                     except:
                         try:
                             if da_kn.index(cash_d) == da_e.index(cash_dby[j]):
-                                element = driver.find_element(By.XPATH,
-                                                              f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
-                                                              )
+                                element = driver.find_element(
+                                    By.XPATH,
+                                    f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div",
+                                )
                                 driver.execute_script("arguments[0].click();", element)
                                 not_find_data = True
                                 break
                         except:
                             if da_ked.index(cash_d) == da_e.index(cash_dby[j]):
-                                element = driver.find_element(By.XPATH,
-                                                              f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div"
-                                                              )
+                                element = driver.find_element(
+                                    By.XPATH,
+                                    f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{j + 1}]/label/div/div",
+                                )
                                 driver.execute_script("arguments[0].click();", element)
                                 not_find_data = True
                                 break
 
             if not not_find_data:
                 print("\nDetected Missing Words!!, Randomly Selected\n")
-                driver.find_element(By.XPATH,
-                                    f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{random.randint(1, 6)}]/label/div/div"
-                                    ).click()
+                driver.find_element(
+                    By.XPATH,
+                    f"//*[@id='testForm']/div[{i}]/div/div[2]/div/div[1]/div[{random.randint(1, 6)}]/label/div/div",
+                ).click()
                 time.sleep(time_1)
             time.sleep(1.5)
         except NoSuchElementException:
