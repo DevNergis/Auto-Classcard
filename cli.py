@@ -32,7 +32,7 @@ def chrome():
     options = webdriver.ChromeOptions()
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
     options.add_argument("--disable-blink-features=AutomationControlled")
-    return webdriver.Chrome(options=options)
+    return webdriver.Remote(options=options, command_executor="http://localhost:4444")
 
 
 def main(driver: WebDriver, loop: bool):
