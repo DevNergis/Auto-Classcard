@@ -1,7 +1,7 @@
 [project]
-name = "classcard-hack"
+name = "Auto-Classcard"
 version = "0.1.0"
-description = "Add your description here"
+description = "✨ Selenium을 활용한 Classcard 학습 자동화 입니다."
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
