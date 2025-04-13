@@ -16,7 +16,7 @@ from learning_types import (
     matching_game_API,
     quiz_battle,
 )
-from utility import (
+from src.utility import (
     chd_wh,
     get_id,
     word_get,
@@ -32,7 +32,7 @@ def chrome():
     options = webdriver.ChromeOptions()
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
     options.add_argument("--disable-blink-features=AutomationControlled")
-    return webdriver.Remote(options=options, command_executor="http://localhost:4444")
+    return webdriver.Chrome(options=options)
 
 
 def main(driver: WebDriver, loop: bool):
@@ -40,8 +40,10 @@ def main(driver: WebDriver, loop: bool):
 
     account = get_id()
     driver.get("https://www.classcard.net/Login")
-    driver.find_element(By.ID, "login_id").send_keys(account["ID"])
-    driver.find_element(By.ID, "login_pwd").send_keys(account["PW"])
+    time.sleep(1)
+    driver.find_element(By.NAME, "login_id").send_keys(account["ID"])
+    driver.find_element(By.NAME, "login_pwd").send_keys(account["PW"])
+    time.sleep(1)
     driver.find_element(
         By.CSS_SELECTOR,
         "#loginForm > div.checkbox.primary.text-primary.text-center.m-t-md > a",

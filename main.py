@@ -1,16 +1,15 @@
 import typer
 import os
 import toml
-import cli
-import env
+from src import app, env, utility
 
-app = typer.Typer()
+cli = typer.Typer()
 login_session = False
 chrome: None
 
 
 # noinspection PyTypeChecker,PyBroadException,PyShadowingNames
-@app.command()
+@cli.command()
 def main():
     global chrome
     config_path = "config.toml"
@@ -28,11 +27,15 @@ def main():
         print(f"{config_path} created with default settings.")
     else:
         print(f"{config_path} already exists.")
+        if utility.check_id(env.account["ID"], env.account["PW"]):
+            print("확인 완료!")
+        else:
+            print("아이디 또는 비밀번호가 잘못되었습니다.\n")
 
-    chrome = cli.chrome()
+    chrome = app.chrome()
 
     try:
-        cli.main(chrome, env.setting["loop"])
+        app.main(chrome, env.setting["loop"])
     except KeyboardInterrupt:
         print("프로그램을 종료합니다.")
     except:
@@ -40,4 +43,4 @@ def main():
 
 
 if __name__ == "__main__":
-    app()
+    cli()

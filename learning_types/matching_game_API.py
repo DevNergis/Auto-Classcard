@@ -1,7 +1,7 @@
 import time
 import httpx
 from urllib.parse import quote
-import env
+from src import env
 
 
 class Ggk:

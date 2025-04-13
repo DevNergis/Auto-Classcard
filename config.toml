@@ -1,9 +1,9 @@
 [account]
-ID = ""
-PW = ""
+ID = "syj0318"
+PW = "@gjtQ6v5q@GxY8B"
 
 [setting]
-loop = false
+loop = true
 
 [setting.matching_game]
 count = 10
