@@ -25,6 +25,29 @@ wheels = [
 ]
 
 [[package]]
+name = "auto-classcard"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "beautifulsoup4" },
+    { name = "black" },
+    { name = "httpx" },
+    { name = "selenium" },
+    { name = "toml" },
+    { name = "typer" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "beautifulsoup4", specifier = ">=4.13.3" },
+    { name = "black", specifier = ">=25.1.0" },
+    { name = "httpx", specifier = ">=0.28.1" },
+    { name = "selenium", specifier = ">=4.31.0" },
+    { name = "toml", specifier = ">=0.10.2" },
+    { name = "typer", specifier = ">=0.15.2" },
+]
+
+[[package]]
 name = "beautifulsoup4"
 version = "4.13.3"
 source = { registry = "https://pypi.org/simple" }
@@ -77,29 +100,6 @@ sdist = { url = "https://files.pythonhosted.org/packages/fc/97/c783634659c2920c3
 wheels = [
     { url = "https://files.pythonhosted.org/packages/bf/ee/f94057fa6426481d663b88637a9a10e859e492c73d0384514a17d78ee205/cffi-1.17.1-cp313-cp313-win32.whl", hash = "sha256:e03eab0a8677fa80d646b5ddece1cbeaf556c313dcfac435ba11f107ba117b5d", size = 172475 },
     { url = "https://files.pythonhosted.org/packages/7c/fc/6a8cb64e5f0324877d503c854da15d76c1e50eb722e320b15345c4d0c6de/cffi-1.17.1-cp313-cp313-win_amd64.whl", hash = "sha256:f6a16c31041f09ead72d69f583767292f750d24913dadacf5756b966aacb3f1a", size = 182009 },
-]
-
-[[package]]
-name = "classcard-hack"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "beautifulsoup4" },
-    { name = "black" },
-    { name = "httpx" },
-    { name = "selenium" },
-    { name = "toml" },
-    { name = "typer" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "beautifulsoup4", specifier = ">=4.13.3" },
-    { name = "black", specifier = ">=25.1.0" },
-    { name = "httpx", specifier = ">=0.28.1" },
-    { name = "selenium", specifier = ">=4.31.0" },
-    { name = "toml", specifier = ">=0.10.2" },
-    { name = "typer", specifier = ">=0.15.2" },
 ]
 
 [[package]]

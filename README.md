@@ -31,9 +31,10 @@ uv sync
 
 ### How to use? / 사용 방법
 
-```
-ID 및 PW 입력 후, 자동화하고자 하는 학습 유형을 선택하시면 됩니다.
-```
+> `uv run main.py`
+> - 으로 시작하실수 있습니다.
+> - ID 및 PW 입력 후, 자동화하고자 하는 학습 유형을 선택하시면 됩니다.
+> - 로그인에 실패 할수도 있습니다. 성공할때까지 실행해 주세요.
 
 ## Issues / 이슈
 
@@ -47,3 +48,6 @@ ID 및 PW 입력 후, 자동화하고자 하는 학습 유형을 선택하시면
 ## License / 라이센스
 
 **Apache 2.0 License**가 적용되어 있습니다.
+
+## Fork
+https://github.com/NellLucas/classcard_hack
