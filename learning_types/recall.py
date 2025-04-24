@@ -52,19 +52,17 @@ def run_recall(driver, num_d, da_e, da_kyn, time_2):
                     time.sleep(time_2)
                     try:
                         driver.find_element(
-                            By.XPATH, f"//*[@id='wrapper-learn']/div/div/div[3]/div[2]"
+                            By.XPATH, "//*[@id='wrapper-learn']/div/div/div[3]/div[2]"
                         ).click()
                     except:
                         pass
             time.sleep(time_2)
         except:
             print("카드 선택에 문제가 발생했습니다. 리콜학습을 종료합니다.")
-            driver.find_element(
-                By.XPATH, f"/html/body/div[1]/div/div[1]/div[1]"
-            ).click()
+            driver.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div[1]").click()
             time.sleep(1)
             driver.find_element(
-                By.XPATH, f"//*[@id='wrapper-learn']/div[2]/div/div/div/div[5]/a[3]"
+                By.XPATH, "//*[@id='wrapper-learn']/div[2]/div/div/div/div[5]/a[3]"
             ).click()
             break
     print("리콜학습이 완료되었습니다.")

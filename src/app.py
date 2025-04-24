@@ -51,8 +51,9 @@ def main(driver: WebDriver, loop: bool):
     time.sleep(1)
 
     while temp_loop:
-        time_1, time_2 = round(random.uniform(0.7, 1.3), 4), round(
-            random.uniform(1.7, 2.3), 4
+        time_1, time_2 = (
+            round(random.uniform(0.7, 1.3), 4),
+            round(random.uniform(1.7, 2.3), 4),
         )
 
         driver.get("https://www.classcard.net/Main")
